@@ -11,17 +11,20 @@ from django.views.decorators.http import require_GET
 
 @require_GET
 def get_cards(request):
-    cards = Deck.objects.all().values('id', 'card_name', 'category', 'type')
+    cards = Deck.objects.all().values('id', 'name', 'image', 'score', 'type')
     return JsonResponse(list(cards), safe=False)
-def index(request):
-    return HttpResponse("Hello, world!")
 
-def my_view(request):
-    data = {
-        "message": "Hello, world!",
-        "status": "success"
-    }
-    return JsonResponse(data)
+@require_GET
+def get_card_by_id(request, id):
+    try:
+        card = Deck.objects.values('id', 'name', 'image', 'score', 'type').get(id=id)
+        return JsonResponse(card, safe=False)
+    except Deck.DoesNotExist:
+        return JsonResponse({'error': f'Card with id {id} not found.'}, status=404)
+
+
+
+
 
 @csrf_exempt
 def raw_post_view(request):

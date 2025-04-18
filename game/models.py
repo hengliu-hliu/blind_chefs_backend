@@ -12,11 +12,13 @@ class Game(models.Model):
 
 class Deck(models.Model):
     id = models.AutoField(primary_key=True)
-    card_name = models.CharField(max_length=100)
-    category = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    image = models.CharField(max_length=255)  # Use ImageField if handling file uploads
+    score = models.IntegerField()
     type = models.CharField(max_length=100)
+
     def __str__(self):
-        return f"{self.card_name} ({self.category})"
+        return f"{self.name} ({self.type})"
 
 class Player(models.Model):
     id = models.AutoField(primary_key=True)
