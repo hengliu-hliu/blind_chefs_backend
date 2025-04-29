@@ -52,3 +52,22 @@ class Move_History(models.Model):
 
     def __str__(self):
         return f"{self.player.name} - {self.action} (Order: {self.move_order})"
+    
+
+class Ingredient(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    type = models.CharField(max_length=50)  # vegetable, meat, protein, fruit, nut, sweet, grain
+    value = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.name} ({self.type})"
+
+class Condiment(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    value = models.CharField(max_length=10)  # +1, +2, x2, x1.5
+    target = models.CharField(max_length=50)  # meat, vegetable, fruit, fish, protein, sweet
+
+    def __str__(self):
+        return f"{self.name} ({self.value} to {self.target})"
