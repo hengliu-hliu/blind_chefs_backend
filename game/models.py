@@ -71,3 +71,12 @@ class Condiment(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.value} to {self.target})"
+
+class Action(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    category = models.CharField(max_length=50, default='action')
+
+    def __str__(self):
+        return f"{self.name}"

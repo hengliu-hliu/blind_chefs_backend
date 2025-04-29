@@ -10,7 +10,7 @@ import random
 
 # Create your views here.
 
-from .models import Deck, Ingredient, Condiment
+from .models import Deck, Ingredient, Condiment, Action
 from django.views.decorators.http import require_GET
 
 @require_GET
@@ -44,10 +44,11 @@ def get_ingredient(request, ingredient_id):
 
 @api_view(['GET'])
 def get_random_item(request):
-    # Get counts of both tables
+    # Get counts of all tables
     ingredient_count = Ingredient.objects.count()
     condiment_count = Condiment.objects.count()
-    total_count = ingredient_count + condiment_count
+    action_count = Action.objects.count()
+    total_count = ingredient_count + condiment_count + action_count
     
     # Generate a random number between 1 and total_count
     random_number = random.randint(1, total_count)
@@ -62,8 +63,8 @@ def get_random_item(request):
             'item_type': random_item.type,
             'value': random_item.value
         })
-    # Otherwise get random condiment
-    else:
+    # If random number is within condiment range, get random condiment
+    elif random_number <= (ingredient_count + condiment_count):
         random_item = random.choice(Condiment.objects.all())
         return Response({
             'type': 'condiment',
@@ -71,6 +72,16 @@ def get_random_item(request):
             'name': random_item.name,
             'value': random_item.value,
             'target': random_item.target
+        })
+    # Otherwise get random action
+    else:
+        random_item = random.choice(Action.objects.all())
+        return Response({
+            'type': 'action',
+            'id': random_item.id,
+            'name': random_item.name,
+            'description': random_item.description,
+            'category': random_item.category
         })
 
 @csrf_exempt
