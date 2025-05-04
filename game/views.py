@@ -13,12 +13,16 @@ import random
 from .models import Deck, Ingredient, Condiment, Action
 from django.views.decorators.http import require_GET
 
+from blind_chefs_backend.auth_decorators import jwt_required
+
 @require_GET
+@jwt_required
 def get_cards(request):
     cards = Deck.objects.all().values('id', 'name', 'image', 'score', 'type')
     return JsonResponse(list(cards), safe=False)
 
 @require_GET
+@jwt_required
 def get_card_by_id(request, id):
     try:
         card = Deck.objects.values('id', 'name', 'image', 'score', 'type').get(id=id)
@@ -27,6 +31,7 @@ def get_card_by_id(request, id):
         return JsonResponse({'error': f'Card with id {id} not found.'}, status=404)
 
 @api_view(['GET'])
+@jwt_required
 def get_ingredient(request, ingredient_id):
     try:
         ingredient = Ingredient.objects.get(id=ingredient_id)
@@ -43,6 +48,7 @@ def get_ingredient(request, ingredient_id):
         )
 
 @api_view(['GET'])
+@jwt_required
 def get_random_item(request):
     # Get counts of all tables
     ingredient_count = Ingredient.objects.count()

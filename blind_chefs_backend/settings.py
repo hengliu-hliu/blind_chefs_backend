@@ -139,3 +139,14 @@ CORS_ALLOW_CREDENTIALS = True
 #     "http://127.0.0.1:3000",
 # ]
 
+
+# Auth0 configuration
+AUTH0_DOMAIN = 'dev-e7shqoubllr5cqej.us.auth0.com'  # e.g. 'dev-abc123.us.auth0.com'
+AUTH0_API_AUDIENCE = 'https://dev-e7shqoubllr5cqej.us.auth0.com/api/v2/'  # e.g. 'https://your-api/'
+AUTH0_ALGORITHMS = ['RS256']
+
+import os
+
+# AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN', 'YOUR_AUTH0_DOMAIN')
+# AUTH0_API_AUDIENCE = os.environ.get('AUTH0_API_AUDIENCE', 'YOUR_API_IDENTIFIER')
+# AUTH0_ALGORITHMS = ['RS256']
