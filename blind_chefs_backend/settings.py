@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'game',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,11 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -129,9 +130,10 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+
+
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True  # For development only! Don't use in production
-CORS_ALLOW_CREDENTIALS = True
 
 # Optional: You can also specify allowed origins instead of allowing all
 # CORS_ALLOWED_ORIGINS = [
